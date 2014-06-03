@@ -40,7 +40,6 @@
 #import "SCRecordingSaveViewControllerHeaderView.h"
 #import "SCRecordingUploadProgressView.h"
 #import "SCLoginView.h"
-#import "SCTableCellBackgroundView.h"
 
 #import "SCSharingMailPickerController.h"
 #import "SCFoursquarePlacePickerController.h"
@@ -570,7 +569,7 @@ const NSArray *allServices = nil;
 {
     [super viewWillAppear:animated];
     
-    [self.view addSubview:[[[SCShareToSoundCloudTitleView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.bounds), 28.0)] autorelease]];
+//    [self.view addSubview:[[[SCShareToSoundCloudTitleView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.bounds), 28.0)] autorelease]];
     
     [self.toolBar setFrame:CGRectMake(0.0,
                                       CGRectGetHeight(self.view.bounds) - 44.0, 
@@ -642,6 +641,10 @@ const NSArray *allServices = nil;
     }
 }
 
+- (UIStatusBarStyle) preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 
 #pragma mark TableView
 
@@ -662,11 +665,7 @@ const NSArray *allServices = nil;
         UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:@"mailShare"];
         if (!cell) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"mailShare"] autorelease];
-            SCTableCellBackgroundView *backgroundView = [[[SCTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
-            backgroundView.opaque = NO;
-            backgroundView.backgroundColor = [UIColor transparentBlack];
-            backgroundView.borderColor = [UIColor blackColor];
-            cell.backgroundView = backgroundView;
+            cell.backgroundColor = [UIColor transparentBlack];
             cell.textLabel.backgroundColor = [UIColor clearColor];
             cell.textLabel.font = [UIFont systemFontOfSize:15.0];
             cell.textLabel.textColor = [UIColor listSubtitleColor];
@@ -684,27 +683,21 @@ const NSArray *allServices = nil;
             cell.detailTextLabel.text = [self.sharingMailAddresses componentsJoinedByString:@", "];
         }
 
-        [(SCTableCellBackgroundView *)cell.backgroundView setPosition:[aTableView cellPositionForIndexPath:indexPath]];
-        
         return cell;
         
     } else if (self.loadingConnections) {
         UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:@"loading"];
         if (!cell) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"loading"] autorelease];
-            SCTableCellBackgroundView *backgroundView = [[[SCTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
-            backgroundView.opaque = NO;
-            backgroundView.backgroundColor = [UIColor clearColor];
-            backgroundView.borderColor = [UIColor clearColor];
+            cell.backgroundColor = [UIColor transparentBlack];
             
             UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
             activityIndicatorView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
-            activityIndicatorView.center = CGPointMake(backgroundView.bounds.size.width / 2.0, backgroundView.bounds.size.height / 2.0);
+            activityIndicatorView.center = CGPointMake(cell.bounds.size.width / 2.0, cell.bounds.size.height / 2.0);
             [activityIndicatorView startAnimating];
-            [backgroundView addSubview:activityIndicatorView];
+            [cell addSubview:activityIndicatorView];
             [activityIndicatorView release];
 
-            cell.backgroundView = backgroundView;
             cell.backgroundColor = [UIColor clearColor];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
@@ -718,13 +711,9 @@ const NSArray *allServices = nil;
                                           //[aTableView dequeueReusableCellWithIdentifier:@"connection"];
             if (!cell) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"connection"] autorelease];
+                cell.backgroundColor = [UIColor transparentBlack];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.opaque = NO;
-                SCTableCellBackgroundView *backgroundView = [[[SCTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
-                backgroundView.opaque = NO;
-                backgroundView.backgroundColor = [UIColor transparentBlack];
-                backgroundView.borderColor = [UIColor blackColor];
-                cell.backgroundView = backgroundView;
                 cell.textLabel.backgroundColor = [UIColor clearColor];
                 cell.textLabel.font = [UIFont systemFontOfSize:15.0];
                 cell.textLabel.textColor = [UIColor whiteColor];
@@ -754,20 +743,14 @@ const NSArray *allServices = nil;
             
             cell.imageView.image = [SCBundle imageWithName:[NSString stringWithFormat:@"service_%@", [connection objectForKeyOrNil:@"service"]]];
             
-            [(SCTableCellBackgroundView *)cell.backgroundView setPosition:[aTableView cellPositionForIndexPath:indexPath]];
-            
             return cell;
         } else {
             UITableViewCell *cell = nil; // WORKAROUND: Reusing cells causes a problem with the boarder
                                          // [aTableView dequeueReusableCellWithIdentifier:@"newConnection"];
             if (!cell) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"newConnection"] autorelease];
+                cell.backgroundColor = [UIColor transparentBlack];
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
-                SCTableCellBackgroundView *backgroundView = [[[SCTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
-                backgroundView.opaque = NO;
-                backgroundView.backgroundColor = [UIColor transparentBlack];
-                backgroundView.borderColor = [UIColor blackColor];
-                cell.backgroundView = backgroundView;
                 cell.textLabel.backgroundColor = [UIColor clearColor];
                 cell.textLabel.font = [UIFont systemFontOfSize:15.0];
                 cell.textLabel.textColor = [UIColor whiteColor];
@@ -781,7 +764,6 @@ const NSArray *allServices = nil;
             cell.textLabel.text = [service objectForKeyOrNil:@"displayName"];
             cell.imageView.image = [SCBundle imageWithName:[NSString stringWithFormat:@"service_%@", [service objectForKeyOrNil:@"service"]]];
             
-            [(SCTableCellBackgroundView *)cell.backgroundView setPosition:[aTableView cellPositionForIndexPath:indexPath]];
             return cell;
         }
     }
