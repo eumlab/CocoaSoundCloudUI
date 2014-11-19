@@ -356,9 +356,9 @@ const NSArray *allServices = nil;
                                  
                                  anAccount.userInfo = result;
                                  
-                                 NSURL *avatarURL = [NSURL URLWithString:[result objectForKeyOrNil:@"avatar_url"]];
-                                 NSData *avatarData = [NSData dataWithContentsOfURL:avatarURL];
-                                 [self.headerView setAvatarImage:[UIImage imageWithData:avatarData]];
+//                                 NSURL *avatarURL = [NSURL URLWithString:[result objectForKeyOrNil:@"avatar_url"]];
+//                                 NSData *avatarData = [NSData dataWithContentsOfURL:avatarURL];
+//                                 [self.headerView setAvatarImage:[UIImage imageWithData:avatarData]];
                                  [self.headerView setUserName:[result objectForKeyOrNil:@"username"]];
                                  
                              } else {
@@ -479,8 +479,9 @@ const NSArray *allServices = nil;
 
     
     // Background
-    UIImage *bg = [SCBundle imageWithName:@"darkTexturedBackgroundPattern"];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:bg];
+//    UIImage *bg = [SCBundle imageWithName:@"darkTexturedBackgroundPattern"];
+//    self.view.backgroundColor = [UIColor colorWithPatternImage:bg];
+    self.view.backgroundColor = [UIColor almostBlackColor];
     
     
     // Navigation Bar
@@ -494,6 +495,8 @@ const NSArray *allServices = nil;
     self.toolBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
                                      UIViewAutoresizingFlexibleTopMargin);
     [self.view addSubview:self.toolBar];
+    
+    [[UIBarButtonItem appearanceWhenContainedIn:[UIToolbar class], nil] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]} forState:UIControlStateNormal];
     
     
     NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:3];
@@ -591,9 +594,9 @@ const NSArray *allServices = nil;
     if (self.account) {
         NSDictionary *userInfo = self.account.userInfo;
         if (userInfo) {
-            NSURL *avatarURL = [NSURL URLWithString:[userInfo objectForKeyOrNil:@"avatar_url"]];
-            NSData *avatarData = [NSData dataWithContentsOfURL:avatarURL];
-            [self.headerView setAvatarImage:[UIImage imageWithData:avatarData]];
+//            NSURL *avatarURL = [NSURL URLWithString:[userInfo objectForKeyOrNil:@"avatar_url"]];
+//            NSData *avatarData = [NSData dataWithContentsOfURL:avatarURL];
+//            [self.headerView setAvatarImage:[UIImage imageWithData:avatarData]];
             [self.headerView setUserName:[userInfo objectForKeyOrNil:@"username"]];
         }
     } else {
