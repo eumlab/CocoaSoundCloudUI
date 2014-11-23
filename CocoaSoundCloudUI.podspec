@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
   s.framework = 'CoreText'
   s.framework = 'CoreLocation'
 
-  s.requires_arc = true
+  s.requires_arc = false
 
   s.dependency 'CocoaSoundCloudAPI', '~> 1.0.2'
   s.dependency 'OHAttributedLabel'
